@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stats Calc BD — Descriptive Statistics Calculator</title>
+<meta name="description" content="Offline bilingual (English / বাংলা) descriptive statistics calculator for Bangladesh: mean, median, mode, quartiles, variance, histogram and box plot.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div>
+      <h1 data-i18n="title">Stats Calc BD</h1>
+      <p class="subtitle" data-i18n="subtitle">Descriptive statistics for your own dataset — fully offline, no account, no server.</p>
+    </div>
+    <button id="langBtn" class="btn outline" type="button">বাংলা</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="inputHeading">
+    <h2 id="inputHeading" data-i18n="inputLabel">Your numbers</h2>
+    <p class="muted" data-i18n="inputHint">Paste numbers separated by commas, spaces or new lines. Bengali digits (০–৯) work too.</p>
+    <label class="sr-only" for="dataInput">Numbers</label>
+    <textarea id="dataInput" rows="5" placeholder="e.g. 12, 15, 14, 10, 18, 15, 20"></textarea>
+    <p id="errorBox" class="error" role="alert"></p>
+    <p id="statusBox" class="status" role="status"></p>
+    <div class="row">
+      <button id="calcBtn" class="btn primary" type="button" data-i18n="calcBtn">Calculate</button>
+      <button id="clearBtn" class="btn" type="button" data-i18n="clearBtn">Clear</button>
+    </div>
+    <div class="samples">
+      <span data-i18n="sampleLabel">Try a sample dataset:</span>
+      <button class="btn small" type="button" data-sample="marks" data-i18n="sampleMarks">Class test marks</button>
+      <button class="btn small" type="button" data-sample="cricket" data-i18n="sampleCricket">Cricket scores</button>
+      <button class="btn small" type="button" data-sample="rain" data-i18n="sampleRain">Rainfall (mm)</button>
+    </div>
+  </section>
+
+  <section class="card" id="resultsSection" hidden aria-labelledby="resultsHeading">
+    <h2 id="resultsHeading" data-i18n="resultsTitle">Results</h2>
+    <div id="statsGrid" class="stats-grid"></div>
+
+    <h3 data-i18n="sortedLabel">Sorted values</h3>
+    <p id="sortedBox" class="mono wrap-text"></p>
+
+    <h3 data-i18n="histLabel">Histogram</h3>
+    <div id="histSvg" class="chart"></div>
+
+    <h3 data-i18n="boxLabel">Box plot (min – Q1 – median – Q3 – max, outliers as dots)</h3>
+    <div id="boxSvg" class="chart"></div>
+
+    <h3 data-i18n="outlierLabel">Outliers (1.5 × IQR rule)</h3>
+    <p id="outliersBox" class="mono wrap-text"></p>
+
+    <h3 data-i18n="freqLabel">Frequency table</h3>
+    <table class="freq">
+      <thead><tr><th data-i18n="valueCol">Value</th><th data-i18n="countCol">Count</th></tr></thead>
+      <tbody id="freqBody"></tbody>
+    </table>
+    <p class="muted small" data-i18n="methodNote">Method: quartiles by linear interpolation (Excel PERCENTILE.INC). Sample variance divides by n−1; population variance divides by n. Outliers are values outside Q1 − 1.5×IQR to Q3 + 1.5×IQR.</p>
+  </section>
+
+  <section class="card" aria-labelledby="savedHeading">
+    <h2 id="savedHeading" data-i18n="savedLabel">Saved datasets</h2>
+    <div class="row">
+      <label class="sr-only" for="saveName">Dataset name</label>
+      <input id="saveName" type="text" maxlength="80" placeholder="Dataset name">
+      <button id="saveBtn" class="btn" type="button" data-i18n="saveBtn">Save dataset</button>
+    </div>
+    <div id="savedList" class="saved-list"></div>
+    <div class="row">
+      <button id="exportBtn" class="btn" type="button" data-i18n="exportBtn">Export JSON</button>
+      <label class="btn file-label" for="importFile" data-i18n="importBtn">Import JSON</label>
+      <input id="importFile" type="file" accept=".json,application/json" hidden>
+    </div>
+    <p class="muted small" data-i18n="importHint">Import a file exported from this app.</p>
+  </section>
+
+  <section class="card empty-note" id="emptyNote">
+    <p data-i18n="emptyResults">Enter numbers and press Calculate to see results here.</p>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p data-i18n="footer">Personal learning tool. Results describe only the numbers you entered — they are not a statistical inference about any wider population.</p>
+  <p class="muted small">100% offline · No network requests · Data stays in your browser (localStorage).</p>
+</footer>
+
+<script src="logic.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
